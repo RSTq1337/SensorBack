@@ -5,12 +5,15 @@ import com.project.lgnscrt.mapper.SensorDto;
 import com.project.lgnscrt.repo.SensorRepository;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
 public class SensorService {
 
     private final SensorRepository repository;
+
 
     public SensorService(SensorRepository repository) {
         this.repository = repository;

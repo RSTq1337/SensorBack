@@ -1,6 +1,11 @@
 package com.project.lgnscrt.entity;
 
 import lombok.*;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.FieldBridge;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Store;
+import org.hibernate.search.bridge.builtin.EnumBridge;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -8,6 +13,7 @@ import javax.validation.constraints.Size;
 import javax.validation.constraints.NotNull;
 
 @Entity
+@Indexed
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,47 +25,33 @@ public class Sensor  {
     private long id;
 
     @NotNull
+    @Field(store = Store.YES)
     private String name;
 
     @NotNull
+    @Field(store = Store.YES)
     private String model;
+    @Field(store = Store.YES)
     private int rangeFrom;
+    @Field(store = Store.YES)
     private int rangeTo;
 
     @NotNull
+    @Field(bridge=@FieldBridge(impl=EnumBridge.class), store = Store.YES)
+    @Enumerated(EnumType.STRING)
     private Type type;
 
     @NotNull
+    @Field(bridge=@FieldBridge(impl= EnumBridge.class), store = Store.YES)
+    @Enumerated(EnumType.STRING)
     private Unit unit;
 
     @Size(max = 40)
+    @Field(store = Store.YES)
     private String location;
 
     @Size(max = 200)
+    @Field(store = Store.YES)
     private String description;
 
-    public Sensor(@NotNull String name, @NotNull String model,
-                  int rangeFrom, int rangeTo, @NotNull Type type,
-                  @NotNull Unit unit, @Size(max = 40) String location,
-                  @Size(max = 200) String description) {
-        this.name = name;
-        this.model = model;
-        this.rangeFrom = rangeFrom;
-        this.rangeTo = rangeTo;
-        this.type = type;
-        this.unit = unit;
-        this.location = location;
-        this.description = description;
-    }
-
-    public Sensor(@NotNull String name, @Size(max = 200) String description, @NotNull Type type ) {
-        this.name = name;
-        this.description = description;
-        this.type = type;
-    }
-
-    public Sensor(@NotNull Type type, @NotNull Unit unit){
-        this.type=type;
-        this.unit=unit;
-    }
 }

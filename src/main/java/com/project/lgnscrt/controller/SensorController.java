@@ -1,25 +1,28 @@
 package com.project.lgnscrt.controller;
 
+
 import com.project.lgnscrt.SensorService;
 import com.project.lgnscrt.entity.Sensor;
 import com.project.lgnscrt.mapper.SensorDto;
 import com.project.lgnscrt.mapper.SensorMapper;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @RestController
+@CrossOrigin(origins="http://localhost:4200")
 @RequestMapping("/api")
 public class SensorController {
 
     final SensorService sensorService;
+//    final HibernateSearchService searchService;
 
-    public SensorController(SensorService sensorService) {
+    public SensorController(SensorService sensorService
+//                            HibernateSearchService searchService
+    ) {
         this.sensorService = sensorService;
+//        this.searchService = searchService;
     }
 
     @PostMapping("/save-sensor")
@@ -32,7 +35,6 @@ public class SensorController {
        return sensorService.listAll().stream()
                .map(SensorMapper.INSTANCE::sensorToSensorDto)
                .collect(Collectors.toList());
-
     }
 
     @DeleteMapping("/delete-sensor/{id}")
@@ -51,4 +53,19 @@ public class SensorController {
     private SensorDto sensorById(@PathVariable("id") String id){
         return SensorMapper.INSTANCE.sensorToSensorDto(sensorService.get(Long.parseLong(id)));
     }
+
+//    @GetMapping("/sensor-list/search")
+//    public List<SensorDto> search(@RequestParam(value = "search", required = false) String q) {
+//        List<Sensor> searchResults = null;
+//        try {
+//            searchResults = searchService.fuzzySearch(q);
+//
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//        }
+//        assert searchResults != null;
+//        return searchResults.stream()
+//                .map(SensorMapper.INSTANCE::sensorToSensorDto)
+//                .collect(Collectors.toList());
+//    }
 }

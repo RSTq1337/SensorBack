@@ -1,8 +1,8 @@
 package com.project.lgnscrt.controller;
 
 
-import com.project.lgnscrt.service.HibernateSearchService;
-import com.project.lgnscrt.service.SensorService;
+import com.project.lgnscrt.serv.HibernateSearchService;
+import com.project.lgnscrt.serv.SensorService;
 import com.project.lgnscrt.entity.Sensor;
 import com.project.lgnscrt.dto.SensorDto;
 import com.project.lgnscrt.mapper.SensorMapper;

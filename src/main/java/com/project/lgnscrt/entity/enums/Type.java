@@ -1,4 +1,4 @@
-package com.project.lgnscrt.entity;
+package com.project.lgnscrt.entity.enums;
 
 public enum Type {
     PRESSURE("Pressure"),

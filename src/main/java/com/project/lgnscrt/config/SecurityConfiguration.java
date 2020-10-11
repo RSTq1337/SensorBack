@@ -1,23 +1,17 @@
 package com.project.lgnscrt.config;
 
+import com.project.lgnscrt.security.VerifyTokenFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
@@ -47,8 +41,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
                 .antMatchers(HttpMethod.DELETE,"/api/delete-sensor/**").hasRole("ADMINISTRATOR")
                 .antMatchers(HttpMethod.POST,"/api/**").hasRole("ADMINISTRATOR")
-
+                .antMatchers("/api/login").hasAnyRole("VIEWER","ADMINISTRATOR")
                 .anyRequest().authenticated()
+                .and()
+                .formLogin()
+                .loginPage("/api/login")
+                .and()
+                .logout()
+                .logoutUrl("/api/logout")
                 .and()
                 .httpBasic()
                 .and()

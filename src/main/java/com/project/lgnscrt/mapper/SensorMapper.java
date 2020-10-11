@@ -1,5 +1,6 @@
 package com.project.lgnscrt.mapper;
 
+import com.project.lgnscrt.dto.SensorDto;
 import com.project.lgnscrt.entity.Sensor;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;

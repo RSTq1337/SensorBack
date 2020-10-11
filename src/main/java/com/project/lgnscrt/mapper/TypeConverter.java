@@ -1,6 +1,6 @@
 package com.project.lgnscrt.mapper;
 
-import com.project.lgnscrt.entity.Type;
+import com.project.lgnscrt.entity.enums.Type;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
